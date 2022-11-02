@@ -837,7 +837,6 @@ public class InventoryHandler {
                     return;
                 }
 
-                /* 加上下方這段 */
                 if (UseSummonBagNotCSP(toUse.getItemId()) > 0) {
                     int result = UseSummonBagNotCSP(toUse.getItemId());
                     if (result > 0) {

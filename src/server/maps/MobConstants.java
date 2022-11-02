@@ -9,7 +9,11 @@ import server.life.MapleMonster;
 import constants.MapConstants;
 
 public class MobConstants {
-    public static int[] REINCARNATION_MOB = new int[]{ 9990026, 2 }; // 輪迴怪物代碼, 生怪數量倍率
+    public static Map<Integer, Integer> reincarnation_mobs = new HashMap<Integer, Integer>();
+
+    static {
+        mobs.put(9990026, 2); // 輪迴怪物代碼, 生怪數量倍率
+    }
 
     public static int isMonsterSpawn(MapleMap map) {
         int addition = 1;
@@ -22,22 +26,24 @@ public class MobConstants {
                 return 1;
             }
         }
-        if (map.getMonsterById(REINCARNATION_MOB[0]) != null) { // 判斷是否有輪迴
-            addition *= REINCARNATION_MOB[1]; // 乘以倍率
+
+        for (Integer mobid : reincarnation_mobs.keySet()) { // 判斷是否有輪迴
+            if (map.getMonsterById(mobid) != null) {
+                addition *= reincarnation_mobs.get(mobid); // 乘以倍率
+            }
         }
         return addition;
     }
 
     public static boolean isReincarnationMob(int mobid) { // 判斷是否為輪迴怪物
-        if (REINCARNATION_MOB[0] == mobid) {
-            return true;
-        }
-        return false;
+        return reincarnation_mobs.containsKey(mobid);
     }
 
     public static boolean isSpawnSpeed(MapleMap map) {
-        if (map.getMonsterById(REINCARNATION_MOB[0]) != null) {
-            return true;
+        for (Integer mobid : reincarnation_mobs.keySet()) {
+            if (map.getMonsterById(mobid) != null) {
+                return true;
+            }
         }
         return false;
     }

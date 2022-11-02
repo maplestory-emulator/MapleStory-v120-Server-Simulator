@@ -2774,8 +2774,9 @@ public final class MapleMap {
     public void respawn(final boolean force) {
         lastSpawnTime = System.currentTimeMillis();
         if (force) { //cpq quick hack
-            final int numShouldSpawn = monsterSpawn.size() * MobConstants.isMonsterSpawn(this) - spawnedMonstersOnMap.get(); // 輪迴倍率
-            // final int numShouldSpawn = monsterSpawn.size() - spawnedMonstersOnMap.get();
+            final int numMobSpawn = monsterSpawn.size() * MobConstants.isMonsterSpawn(this); // 輪迴倍率
+            final int numShouldSpawn = numMobSpawn - spawnedMonstersOnMap.get();
+
             if (numShouldSpawn > 0) {
                 int spawned = 0;
 
@@ -2788,8 +2789,9 @@ public final class MapleMap {
                 }
             }
         } else {
-            final int numShouldSpawn = maxRegularSpawn * MobConstants.isMonsterSpawn(this) - spawnedMonstersOnMap.get(); // 輪迴倍率
-            // final int numShouldSpawn = maxRegularSpawn - spawnedMonstersOnMap.get();
+            final int numMobSpawn = maxRegularSpawn * MobConstants.isMonsterSpawn(this); // 輪迴倍率
+            final int numShouldSpawn = numMobSpawn - spawnedMonstersOnMap.get();
+
             if (numShouldSpawn > 0) {
                 int spawned = 0;
 
