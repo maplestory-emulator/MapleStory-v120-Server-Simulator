@@ -1530,4 +1530,8 @@ public class MapleMonster extends AbstractLoadedMapleLife {
         }
         listener = null;
     }
+
+    public final int getSpawnChrid(){
+        return stats.getSpawnChrId();
+    }
 }

@@ -5838,4 +5838,13 @@ public class MapleCharacter extends AbstractAnimatedMapleMapObject implements Se
     public int getPrefix() {
         return prefix;
     }
+
+    public boolean isReincarnationMob() {
+        for (MapleMonster monster : getMap().getAllMonster()) {
+            if (monster.getId() == 9990026 && monster.getSpawnChrid() != this.getId()) { // 輪迴 mob id
+                return true;
+            }
+        }
+        return false;
+    }
 }

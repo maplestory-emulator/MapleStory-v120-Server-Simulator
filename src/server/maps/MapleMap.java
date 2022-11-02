@@ -93,6 +93,8 @@ import server.maps.MapleNodes.MaplePlatform;
 import server.maps.MapleNodes.MonsterPoint;
 import tools.Pair;
 
+import server.maps.MobConstants;
+
 public final class MapleMap {
 
     /*
@@ -2772,8 +2774,8 @@ public final class MapleMap {
     public void respawn(final boolean force) {
         lastSpawnTime = System.currentTimeMillis();
         if (force) { //cpq quick hack
-            final int numShouldSpawn = monsterSpawn.size() - spawnedMonstersOnMap.get();
-
+            final int numShouldSpawn = monsterSpawn.size() * MobConstants.isMonsterSpawn(this) - spawnedMonstersOnMap.get(); // 輪迴倍率
+            // final int numShouldSpawn = monsterSpawn.size() - spawnedMonstersOnMap.get();
             if (numShouldSpawn > 0) {
                 int spawned = 0;
 
@@ -2786,7 +2788,8 @@ public final class MapleMap {
                 }
             }
         } else {
-            final int numShouldSpawn = maxRegularSpawn - spawnedMonstersOnMap.get();
+            final int numShouldSpawn = maxRegularSpawn * MobConstants.isMonsterSpawn(this) - spawnedMonstersOnMap.get(); // 輪迴倍率
+            // final int numShouldSpawn = maxRegularSpawn - spawnedMonstersOnMap.get();
             if (numShouldSpawn > 0) {
                 int spawned = 0;
 
@@ -3253,7 +3256,9 @@ public final class MapleMap {
     }
 
     public final boolean canSpawn() {
+        createMobInterval = (short) (MobConstants.isSpawnSpeed(this) ? 0 : 9000); // 有輪迴時怪物重生時間間隔為 0
         return lastSpawnTime > 0 && isSpawns && lastSpawnTime + createMobInterval < System.currentTimeMillis();
+        // return true;
     }
 
     public final boolean canHurt() {

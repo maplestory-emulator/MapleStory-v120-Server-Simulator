@@ -335,4 +335,8 @@ public class MapleMonsterStats {
     public void setDropItemPeriod(int d) {
         this.dropItemPeriod = d;
     }
+
+    public int getSpawnChrId() {
+        return SpawnChrId;
+    }
 }

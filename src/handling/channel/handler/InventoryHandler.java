@@ -836,6 +836,24 @@ public class InventoryHandler {
                     c.getSession().write(MaplePacketCreator.enableActions());
                     return;
                 }
+
+                /* 加上下方這段 */
+                if (UseSummonBagNotCSP(toUse.getItemId()) > 0) {
+                    int result = UseSummonBagNotCSP(toUse.getItemId());
+                    if (result > 0) {
+                        if (chr.isReincarnationMob()) {
+                            switch (result) {
+                                case 1: {
+                                    chr.dropMessage("地圖上有人施放了輪迴");
+                                    break;
+                                }
+                            }
+                            c.getSession().write(MaplePacketCreator.enableActions());
+                            return;
+                        }
+                    }
+                }
+                
                 MapleMonster ht;
                 int type = 0;
 
@@ -848,6 +866,16 @@ public class InventoryHandler {
             }
         }
         c.getSession().write(MaplePacketCreator.enableActions());
+    }
+
+    public static int UseSummonBagNotCSP(int itemId) {
+        int result = 0;
+        switch (itemId) {
+            case 2109013: // 輪迴道具 ID
+                result = 1;
+                break;
+        }
+        return result;
     }
 
     public static final void UseTreasureChest(final SeekableLittleEndianAccessor slea, final MapleClient c, final MapleCharacter chr) {
